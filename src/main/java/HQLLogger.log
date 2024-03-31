@@ -1,0 +1,34 @@
+23:28:34.064 [main] INFO  org.flywaydb.core.FlywayExecutor - Database: jdbc:mysql://localhost:3306/spacetravel (MySQL 8.0)
+23:28:34.180 [main] INFO  org.flywaydb.core.internal.schemahistory.JdbcTableSchemaHistory - Schema history table `spacetravel`.`flyway_schema_history` does not exist yet
+23:28:34.188 [main] INFO  org.flywaydb.core.internal.command.DbValidate - Successfully validated 2 migrations (execution time 00:00.051s)
+23:28:34.254 [main] INFO  org.flywaydb.core.internal.schemahistory.JdbcTableSchemaHistory - Creating Schema History table `spacetravel`.`flyway_schema_history` ...
+23:28:34.460 [main] INFO  org.flywaydb.core.internal.command.DbMigrate - Current version of schema `spacetravel`: << Empty Schema >>
+23:28:34.497 [main] INFO  org.flywaydb.core.internal.command.DbMigrate - Migrating schema `spacetravel` to version "1 - create db"
+23:28:34.728 [main] INFO  org.flywaydb.core.internal.command.DbMigrate - Migrating schema `spacetravel` to version "2 - populate db"
+23:28:34.801 [main] INFO  org.flywaydb.core.internal.command.DbMigrate - Successfully applied 2 migrations to schema `spacetravel`, now at version v2 (execution time 00:00.188s)
+23:28:34.817 [main] INFO  util.HibernateUtil - Database migration has been completed successfully.
+23:28:34.975 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.4.4.Final
+23:28:35.088 [main] ERROR util.HibernateUtil - Error initializing SessionFactory: Could not locate cfg.xml resource [hibernate.cfg.xml]
+org.hibernate.internal.util.config.ConfigurationException: Could not locate cfg.xml resource [hibernate.cfg.xml]
+	at org.hibernate.boot.cfgxml.internal.ConfigLoader.loadConfigXmlResource(ConfigLoader.java:53) ~[hibernate-core-6.4.4.Final.jar:6.4.4.Final]
+	at org.hibernate.boot.registry.StandardServiceRegistryBuilder.configure(StandardServiceRegistryBuilder.java:244) ~[hibernate-core-6.4.4.Final.jar:6.4.4.Final]
+	at org.hibernate.boot.registry.StandardServiceRegistryBuilder.configure(StandardServiceRegistryBuilder.java:233) ~[hibernate-core-6.4.4.Final.jar:6.4.4.Final]
+	at util.HibernateUtil.getSessionFactory(HibernateUtil.java:31) [main/:?]
+	at Main.main(Main.java:16) [main/:?]
+23:28:39.236 [main] ERROR service.ClientCrudServiceImpl - Error getting all clients: Cannot invoke "org.hibernate.SessionFactory.openSession()" because "this.sessionFactory" is null
+java.lang.NullPointerException: Cannot invoke "org.hibernate.SessionFactory.openSession()" because "this.sessionFactory" is null
+	at service.ClientCrudServiceImpl.getAllClients(ClientCrudServiceImpl.java:72) [main/:?]
+	at service.ClientCrudServiceImpl.printAllClients(ClientCrudServiceImpl.java:84) [main/:?]
+	at Main.main(Main.java:35) [main/:?]
+23:28:39.237 [main] INFO  service.ClientCrudServiceImpl - No clients found in the database.
+23:28:47.307 [main] ERROR service.ClientCrudServiceImpl - Error adding client: Cannot invoke "org.hibernate.SessionFactory.openSession()" because "this.sessionFactory" is null
+java.lang.NullPointerException: Cannot invoke "org.hibernate.SessionFactory.openSession()" because "this.sessionFactory" is null
+	at service.ClientCrudServiceImpl.addClient(ClientCrudServiceImpl.java:97) [main/:?]
+	at Main.addClient(Main.java:59) [main/:?]
+	at Main.main(Main.java:32) [main/:?]
+23:28:50.339 [main] ERROR service.ClientCrudServiceImpl - Error getting all clients: Cannot invoke "org.hibernate.SessionFactory.openSession()" because "this.sessionFactory" is null
+java.lang.NullPointerException: Cannot invoke "org.hibernate.SessionFactory.openSession()" because "this.sessionFactory" is null
+	at service.ClientCrudServiceImpl.getAllClients(ClientCrudServiceImpl.java:72) [main/:?]
+	at service.ClientCrudServiceImpl.printAllClients(ClientCrudServiceImpl.java:84) [main/:?]
+	at Main.main(Main.java:35) [main/:?]
+23:28:50.340 [main] INFO  service.ClientCrudServiceImpl - No clients found in the database.
