@@ -1,6 +1,8 @@
 package util;
 
-import entity.*;
+import entity.Client;
+import entity.Planet;
+import entity.Ticket;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.SessionFactory;
@@ -10,6 +12,8 @@ import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.AvailableSettings;
 import org.flywaydb.core.Flyway;
+
+import java.util.Properties;
 
 public class HibernateUtil {
 
@@ -27,15 +31,17 @@ public class HibernateUtil {
                 // Запускаємо міграцію з Flyway перед створенням SessionFactory
                 migrateDatabase();
 
+                // Налаштовуємо властивості Hibernate
+                Properties hibernateProperties = new Properties();
+                hibernateProperties.setProperty(AvailableSettings.DIALECT, "org.hibernate.dialect.MySQL8Dialect");
+                hibernateProperties.setProperty(AvailableSettings.SHOW_SQL, "true");
+                hibernateProperties.setProperty(AvailableSettings.HBM2DDL_AUTO, "update");
+
                 StandardServiceRegistry standardRegistry = new StandardServiceRegistryBuilder()
-                        .configure()
                         .applySetting("hibernate.connection.url", URL)
                         .applySetting("hibernate.connection.username", USERNAME)
                         .applySetting("hibernate.connection.password", PASSWORD)
-                        .applySetting(AvailableSettings.DIALECT, "org.hibernate.dialect.MySQL8Dialect")
-                        .applySetting(AvailableSettings.SHOW_SQL, "true")
-                        .applySetting(AvailableSettings.HBM2DDL_AUTO, "update")
-                        .applySetting(AvailableSettings.POOL_SIZE, "5")
+                        .applySettings(hibernateProperties)
                         .build();
 
                 Metadata metadata = new MetadataSources(standardRegistry)

@@ -70,14 +70,16 @@ public class ClientCrudServiceImpl implements ClientCrudService {
     public List<Client> getAllClients() {
         List<Client> clients = null;
         try (Session session = sessionFactory.openSession()) {
-            Query<Client> query = session.createQuery("FROM Сlient", Client.class);
-            clients = query.list();
+            Query<Client> query = session.createQuery("SELECT c FROM Client c", Client.class);
+            clients = query.getResultList();
             logger.info("Retrieved all clients: {}", clients);
         } catch (Exception e) {
             logger.error("Error getting all clients: {}", e.getMessage(), e);
         }
         return clients;
     }
+
+
 
     @Override
     public void printAllClients() {
