@@ -32,6 +32,13 @@ public interface ClientCrudService {
     Client findById(Long id);
 
     /**
+     * Оновлює існуючий об'єкт клієнта в базі даних з новими значеннями.
+     *
+     * @param client Об'єкт клієнта з оновленими даними.
+     */
+    void update(Client client);
+
+    /**
      * Отримує всіх клієнтів з бази даних.
      *
      * @return список всіх клієнтів
