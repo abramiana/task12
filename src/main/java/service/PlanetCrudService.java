@@ -17,6 +17,13 @@ public interface PlanetCrudService {
     void saveOrUpdate(Planet planet);
 
     /**
+     * Оновлює існуючу планету з новими даними.
+     *
+     * @param planet Планета з новими даними для оновлення.
+     */
+    void update(Planet planet);
+
+    /**
      * Видаляє об'єкт планети з бази даних.
      *
      * @param planet об'єкт планети для видалення

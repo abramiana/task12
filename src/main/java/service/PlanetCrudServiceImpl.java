@@ -33,6 +33,33 @@ public class PlanetCrudServiceImpl implements PlanetCrudService {
             logger.error("Error saving/updating planet: {}", e.getMessage(), e);
         }
     }
+    @Override
+    public void update(Planet planet) {
+        Transaction transaction = null;
+        try (Session session = sessionFactory.openSession()) {
+            transaction = session.beginTransaction();
+
+            // Отримуємо планету з бази даних за її ідентифікатором
+            Planet existingPlanet = session.get(Planet.class, planet.getId());
+            if (existingPlanet != null) {
+                // Оновлюємо поля існуючої планети з новими значеннями
+                existingPlanet.setName(planet.getName());
+                // Тут можна оновити інші поля, якщо потрібно
+
+                // Зберігаємо оновлену планету у базі даних
+                session.saveOrUpdate(existingPlanet);
+                transaction.commit();
+                logger.info("Planet updated successfully: {}", existingPlanet);
+            } else {
+                logger.error("Planet not found with ID: {}", planet.getId());
+            }
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            logger.error("Error updating planet: {}", e.getMessage(), e);
+        }
+    }
 
     @Override
     public void delete(Planet planet) {

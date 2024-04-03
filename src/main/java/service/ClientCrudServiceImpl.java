@@ -10,6 +10,9 @@ import org.hibernate.query.Query;
 
 import java.util.List;
 
+/**
+ * Реалізація CRUD-операцій для сутності клієнта (Client).
+ */
 public class ClientCrudServiceImpl implements ClientCrudService {
     private static final Logger logger = LogManager.getLogger(ClientCrudServiceImpl.class);
     private final SessionFactory sessionFactory;
@@ -33,6 +36,34 @@ public class ClientCrudServiceImpl implements ClientCrudService {
             logger.error("Error saving/updating client: {}", e.getMessage(), e);
         }
     }
+
+    @Override
+    public void update(Client client) {
+        Transaction transaction = null;
+        try (Session session = sessionFactory.openSession()) {
+            transaction = session.beginTransaction();
+
+            // Отримуємо клієнта з бази даних за його ідентифікатором
+            Client existingClient = session.get(Client.class, client.getId());
+            if (existingClient != null) {
+                // Оновлюємо поля існуючого клієнта з новими значеннями
+                existingClient.setName(client.getName());
+
+                // Зберігаємо оновленого клієнта у базі даних
+                session.saveOrUpdate(existingClient);
+                transaction.commit();
+                logger.info("Client updated successfully: {}", existingClient);
+            } else {
+                logger.error("Client not found with ID: {}", client.getId());
+            }
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            logger.error("Error updating client: {}", e.getMessage(), e);
+        }
+    }
+
 
     @Override
     public void delete(Client client) {
@@ -78,7 +109,6 @@ public class ClientCrudServiceImpl implements ClientCrudService {
         }
         return clients;
     }
-
 
 
     @Override
